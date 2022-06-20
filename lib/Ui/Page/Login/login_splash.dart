@@ -24,6 +24,7 @@ class _LoginSplashPageState extends State<LoginSplashPage> with TickerProviderSt
   Animation? _positionBottomAnimation;
   Animation? _TextpositionAnimation;
   Animation? _TextSizeAnimation;
+  Animation? _fromAnimation;
   bool loadinDone = false;
   bool loginFrom = false;
 
@@ -42,6 +43,7 @@ class _LoginSplashPageState extends State<LoginSplashPage> with TickerProviderSt
     _positionBottomAnimation=Tween(begin: -40.0,end: -265.0).animate(_controller!);
     _TextpositionAnimation=Tween(begin: 310.0,end: 110.0).animate(_controller!);
     _TextSizeAnimation=Tween(begin: 36.0,end: 22.0).animate(_controller!);
+    _fromAnimation=Tween(begin: 0.0,end: 1.0).animate(_controller!);
 
 
 
@@ -116,49 +118,51 @@ class _LoginSplashPageState extends State<LoginSplashPage> with TickerProviderSt
                           child: Lottie.asset("assets/images/loading.json")),
                     ),
 
-                  loginFrom?Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    child: Form(
-                      key: _globalkey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children:[
-                          const SizedBox(height: 20,),
-                          MaterialTextField(lable:"",hintText:"Email",readOnly: false,controller:emilController ,),
-                          const SizedBox(height: 14,),
-                          MaterialTextFieldPassword(lable:"email",hintText: "Password",controller:passwordController ,),
-                          const SizedBox(height: 14,),
-                          InkWell(
-                            onTap: (){
-                              if (_globalkey.currentState!.validate()) {
-                                setState(() {
-                                  Navigator.pushNamed(context, HOME_PAGE);
-                                  // BlocProvider.of<LoginCubit>(context).logIn(emilController.text,passwordController.text);
-                                });
-                              }
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width*0.9,
-                              height: 64,
-                              color: Color(0XFF1E57F1),
-                              child: const Center(
-                                child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w800),),
+                  AnimatedOpacity(
+                    opacity: _fromAnimation!.value,
+                    duration: Duration(microseconds: 4000),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      child: Form(
+                        key: _globalkey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[
+                            const SizedBox(height: 20,),
+                            MaterialTextField(lable:"",hintText:"Email",readOnly: false,controller:emilController ,),
+                            const SizedBox(height: 14,),
+                            MaterialTextFieldPassword(lable:"email",hintText: "Password",controller:passwordController ,),
+                            const SizedBox(height: 14,),
+                            InkWell(
+                              onTap: (){
+                                if (_globalkey.currentState!.validate()) {
+                                  setState(() {
+                                    Navigator.pushNamed(context, HOME_PAGE);
+                                    // BlocProvider.of<LoginCubit>(context).logIn(emilController.text,passwordController.text);
+                                  });
+                                }
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width*0.9,
+                                height: 64,
+                                color: Color(0XFF1E57F1),
+                                child: const Center(
+                                  child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w800),),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 14,),
-                          InkWell(
-                              onTap: () {
+                            const SizedBox(height: 14,),
+                            InkWell(
+                                onTap: () {
 
-                              },
-                              child:  Text("Support  ",style: TextStyle(color: Color(0Xff1E57F1),fontSize: 18,fontWeight: FontWeight.w300),)
-                          ),
-                        ],
+                                },
+                                child:  Text("Support  ",style: TextStyle(color: Color(0Xff1E57F1),fontSize: 18,fontWeight: FontWeight.w300),)
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ):Container(
-
                   ),
                   
                   
