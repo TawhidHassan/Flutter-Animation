@@ -13,7 +13,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   AnimationController? _controller;
   Animation? _colorAnimation;
   Animation? _positionAnimation;
+  Animation? _positionBottomAnimation;
   Animation? _TextpositionAnimation;
+  Animation? _TextSizeAnimation;
   bool selected = false;
   @override
   void initState() {
@@ -21,13 +23,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     super.initState();
     print("init0");
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
     _colorAnimation=ColorTween(begin: Colors.black,end: Colors.white).animate(_controller!);
-    _positionAnimation=Tween(begin: -40.0,end: -70.0).animate(_controller!);
-    _TextpositionAnimation=Tween(begin: 310.0,end: 170.0).animate(_controller!);
+    _positionAnimation=Tween(begin: -40.0,end: -130.0).animate(_controller!);
+    _positionBottomAnimation=Tween(begin: -40.0,end: -265.0).animate(_controller!);
+    _TextpositionAnimation=Tween(begin: 310.0,end: 110.0).animate(_controller!);
+    _TextSizeAnimation=Tween(begin: 36.0,end: 22.0).animate(_controller!);
 
 
     _controller!.forward();
@@ -81,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("PAX VOUCHERS",style: TextStyle(fontWeight: FontWeight.w400,fontSize:selected?22: 36,color:_colorAnimation!.value),)
+                              Text("PAX VOUCHERS",style: TextStyle(fontWeight: FontWeight.w400,fontSize:_TextSizeAnimation!.value,color:_colorAnimation!.value),)
                             ],
                           )
                       ),
@@ -97,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                   animation: _controller!,
                   builder: (context,_){
                     return Positioned(
-                      bottom: _positionAnimation!.value,
+                      bottom: _positionBottomAnimation!.value,
                       child: Image.asset("assets/images/bottom.png",fit: BoxFit.fitWidth,),
                     );
                   },
